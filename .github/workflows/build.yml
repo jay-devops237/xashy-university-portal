@@ -4,7 +4,7 @@ on:
     branches: [ "main"]
 jobs:
   buid-job: 
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: clone the repo
         uses: actions/checkout@v4 # this steps clones the repo onto the provided runner. 
