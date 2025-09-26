@@ -20,6 +20,22 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.13.2</junit.version>
         <servlet.version>4.0.1</servlet.version>
+        
+        <!-- SonarQube Cloud Properties -->
+        <sonar.organization>jay-devops237</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.projectKey>com.xashytech.university:student-portal</sonar.projectKey>
+        <sonar.projectName>Xashy Tech University Student Portal</sonar.projectName>
+        <sonar.projectVersion>${project.version}</sonar.projectVersion>
+        <sonar.sources>src/main/java,src/main/webapp</sonar.sources>
+        <sonar.tests>src/test/java</sonar.tests>
+        <sonar.java.binaries>target/classes</sonar.java.binaries>
+        <sonar.java.test.binaries>target/test-classes</sonar.java.test.binaries>
+        <sonar.junit.reportPaths>target/surefire-reports</sonar.junit.reportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        
+        <!-- JaCoCo Properties -->
+        <jacoco.version>0.8.8</jacoco.version>
     </properties>
     
     <dependencies>
@@ -47,7 +63,7 @@
         </dependency>
     </dependencies>
 
-    <!-- New: GitHub Packages repository -->
+    <!-- GitHub Packages repository -->
     <distributionManagement>
         <repository>
             <id>github</id>
@@ -88,6 +104,34 @@
                 <version>3.1.2</version>
             </plugin>
             
+            <!-- JaCoCo Plugin for Code Coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- SonarQube Scanner Plugin -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.10.0.2594</version>
+            </plugin>
+            
             <!-- Tomcat Plugin for easy deployment -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -101,4 +145,17 @@
             </plugin>
         </plugins>
     </build>
+    
+    <!-- SonarQube Profile for CI/CD -->
+    <profiles>
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <sonar.scanner.skip>false</sonar.scanner.skip>
+            </properties>
+        </profile>
+    </profiles>
 </project>
