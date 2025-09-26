@@ -4,8 +4,13 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
-  build-job: 
+  build-job:
+  permission 
     runs-on: ubuntu-latest
     steps:
       - name: Clone the repo
@@ -27,3 +32,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: pushes the artifact to github packages
+        run: mvn deploy
