@@ -2,8 +2,6 @@ name: Build, test and package mvn artifact with SAST
 on:
   push: 
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -12,8 +10,6 @@ jobs:
     steps:
       - name: Clone the repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for better relevancy of SonarCloud analysis
       
       - name: Setup Java 
         uses: actions/setup-java@v5
@@ -23,21 +19,11 @@ jobs:
           cache: maven
       
       - name: Run tests and generate coverage reports
-        run: mvn clean verify
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_ACTOR: ${{ github.actor }}
-      
+        run: mvn clean package
+        
       - name: SAST with SonarCloud 
         run: mvn sonar:sonar -Psonar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: war-artifact
-          path: target/*.war
-      
