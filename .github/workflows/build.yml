@@ -1,23 +1,30 @@
-name: Build , test and package mvn artifact
-on:
-  push: 
-    branches: [ "main"]
-jobs:
-  buid-job: 
-    runs-on: ubuntu-latest
-    steps:
-      - name: clone the repo
-        uses: actions/checkout@v4 # this steps clones the repo onto the provided runner. 
-      - name: setup java 
-        uses: actions/setup-java@v5 # this step installs java and maven. 
-        with:
-          distribution: 'temurin' 
-          java-version: '11'
-          cache: maven
-      - name: package with maven 
-        run:  mvn clean package 
-      - name: upload artifact 
-        uses: actions/upload-artifact@v4
-        with: 
-          name: webapp
-          path: target/*.war
+# name: Build , test and package mvn artifact
+# on:
+#   push: 
+#     branches: [ "main"]
+#   workflow_dispatch:
+# jobs:
+#   buid-job: 
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: clone the repo
+#         uses: actions/checkout@v4 # this steps clones the repo onto the provided runner. 
+#       - name: setup java 
+#         uses: actions/setup-java@v5 # this step installs java and maven. 
+#         with:
+#           distribution: 'temurin' 
+#           java-version: '11'
+#           cache: maven
+#       - name: package with maven 
+#         run:  mvn clean package 
+#       - name: upload artifact 
+#         uses: actions/upload-artifact@v4
+#         with: 
+#           name: webapp
+#           path: target/*.war
+#   SAST-SCAN:
+#   needs: Build-job
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: clone the repo 
+#          uses: actions/checkout@v4
