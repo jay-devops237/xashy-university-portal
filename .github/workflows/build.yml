@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   build-job:
-  permission 
     runs-on: ubuntu-latest
     steps:
       - name: Clone the repo
