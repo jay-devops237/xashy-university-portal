@@ -1,4 +1,4 @@
-name: Build, test and package mvn artifact with SAST
+name: Build, test and package mvn artifact with SAST step
 on:
   push: 
     branches: [ "main" ]
