@@ -1,13 +1,8 @@
-name: Build, test and package mvn artifact with SAST
+name: Build, test and package mvn artifact with SAST step1
 on:
   push: 
     branches: [ "main" ]
   workflow_dispatch:
-
-permissions:
-  contents: read
-  packages: write
-
 jobs:
   build-job:
     runs-on: ubuntu-latest
